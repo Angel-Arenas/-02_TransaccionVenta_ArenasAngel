@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Historial de Ventas</h2>
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar por cliente..." 
+        [(ngModel)]="filtroCliente">
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th class="text-center">Cant. Productos</th>
+          <th class="text-end">Total</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let v of ventasFiltradas">
+          <td>#{{ v.id }}</td>
+          <td>{{ v.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td><strong>{{ v.clienteNombre }}</strong></td>
+          <td class="text-center">
+            <span class="badge-products">{{ obtenerTotalProductos(v) }}</span>
+          </td>
+          <td class="text-end total-cell">${{ v.total | number:'1.2-2' }}</td>
+          <td class="text-center">
+            <button class="btn-icon" title="Ver Detalle">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="ventasFiltradas.length === 0">
+          <td colspan="6" class="text-center p-5 text-muted">
+            <i class="fa-solid fa-folder-open d-block mb-2" style="font-size: 40px;"></i>
+            No hay ventas registradas que coincidan con la búsqueda.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
